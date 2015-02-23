@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SampleScript : MonoBehaviour {
+public class PlayerStatusModel : MonoBehaviour {
 
-	public int sample = 2;
+	public static int p1_money;
+	public static int p1_stamina;
+	public static int p1_looks;
 
 	// Use this for initialization
 	void Start () {

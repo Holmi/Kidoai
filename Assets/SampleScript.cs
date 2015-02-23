@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SampleScript : MonoBehaviour {
 
-	public int sample = 1;
+	public int sample = 2;
 
 	// Use this for initialization
 	void Start () {

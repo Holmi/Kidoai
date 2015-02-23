@@ -5,6 +5,7 @@ Temp/
 Obj/
 UnityGenerated/
 Library/
+Assets/UnityVS/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -31,6 +32,7 @@ ExportedObj/
 Icon?
 ehthumbs.db
 Thumbs.db
+UnityVS.meta
 
 # ============ #
 # for others   #

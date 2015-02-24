@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2fc77f40bb8c91a4d92f5aad9f55d9ce
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - tx_background_work: {fileID: 2800000, guid: 5be79b6a8feb2904081fc5295c3ebfbd,
+      type: 3}
+  - tx_background_shapeup: {fileID: 2800000, guid: f1c1e902252ae08429d077f0238a0a95,
+      type: 3}
+  - tx_background_improvelooks: {fileID: 2800000, guid: 2c8e2dfdcfc452e4497891f7dddddf87,
+      type: 3}
+  - tx_background_rest: {fileID: 2800000, guid: 6b20846415168cd4d8b83dd8889e85fc,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -19,6 +19,6 @@ public class LoadText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(txt.text);
+		//Debug.Log(txt.text);
 	}
 }

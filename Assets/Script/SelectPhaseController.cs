@@ -18,13 +18,13 @@ public class SelectPhaseController : MonoBehaviour {
 	// 選択画面で現在選択中の選択肢
 	private int currentSelected = 0;
 	private int maxSelectPhase1 = 3;
-	private int[] maxSelectPhase2 = {4, 3, 3};
-
-	// 行動選択肢のテキスト
-	public string[][] selectText;
+	[SerializeField]
+	private int maxSelectPhase2;
 
 	// 描画されていない選択肢のオブジェクトを保管するポジション
 	private Vector3 poolPosition;
+	//選択カーソルのゲームオブジェクト
+	public GameObject select;
 
 	// Use this for initialization
 	void Start () {
@@ -35,19 +35,19 @@ public class SelectPhaseController : MonoBehaviour {
 	void Update () {
 		// 右ボタンが押された場合、カーソルを右に動かす。
 		if (Input.GetButtonDown(playerId.ToString() + " Right")) {
+			select.transform.position += new Vector3(0.6f,0,0);
 			currentSelected++;
 			if (currentPhase == Phase.Phase1 && currentSelected > maxSelectPhase1 - 1)
 				currentSelected = 0;
-			else if (currentPhase == Phase.Phase2 && currentSelected > maxSelectPhase2[currentSelected] - 1)
+			else if (currentPhase == Phase.Phase2 && currentSelected > maxSelectPhase2 - 1)
 				currentSelected = 0;
-			SetTextColorByIndex(currentSelected);
 		} else if (Input.GetButtonDown(playerId.ToString() + " Left")) {
+			select.transform.position -= new Vector3(0.6f,0,0);
 			currentSelected--;
 			if (currentPhase == Phase.Phase1 && currentSelected < 0)
 				currentSelected = maxSelectPhase1 - 1;
 			else if (currentPhase == Phase.Phase2 && currentSelected < 0)
-				currentSelected = maxSelectPhase2[currentSelected] - 1;
-			SetTextColorByIndex(currentSelected);
+				currentSelected = maxSelectPhase2 - 1;
 		}
 
 		// 決定ボタンが押された場合、次のフェーズへ進める。
@@ -68,6 +68,8 @@ public class SelectPhaseController : MonoBehaviour {
 					default:
 						break;
 				}
+				Transform o = this.GetComponentsInChildren<Transform>().Where(obj => obj.transform.localPosition == new Vector3(0, 0, 0.8f) && obj.transform != this.transform).First();
+				maxSelectPhase2 = o.transform.GetComponentsInChildren<Transform>().Where(obj => obj.transform != o.transform && obj.name.Contains("Select")).ToArray().Length;
 			} else if (currentPhase == Phase.Phase2) {
 				Application.LoadLevel("Act");
 			}
@@ -81,7 +83,7 @@ public class SelectPhaseController : MonoBehaviour {
 	void SetLocalPositionToZeroByName(string objectName) {
 		Transform obj = transform.GetComponentsInChildren<Transform>()
 			.Where(o => o.name.Equals(objectName)).First();
-		obj.transform.localPosition = Vector3.zero;
+		obj.transform.localPosition = new Vector3(0, 0, 0.8f);
 	}
 
 	/// <summary>
@@ -92,20 +94,5 @@ public class SelectPhaseController : MonoBehaviour {
 		Transform obj = transform.GetComponentsInChildren<Transform>()
 			.Where(o => o.name.Equals(objectName)).First();
 		obj.transform.localPosition = poolPosition;
-	}
-
-	/// <summary>
-	/// 現在選択されている選択肢のテキストの色を変更します。
-	/// </summary>
-	/// <param name="index"></param>
-	void SetTextColorByIndex(int index) {
-		Transform obj = transform.GetComponentsInChildren<Transform>()
-			.Where(o => o.transform.position == Vector3.zero).First();
-		
-		foreach (Transform item in obj) {
-			item.GetComponent<TextMesh>().color = Color.black;
-		}
-
-		obj.GetChild(index).GetComponent<TextMesh>().color = Color.red;
 	}
 }

@@ -6,6 +6,14 @@ public class PlayerStatusModel : MonoBehaviour {
 	public static int p1_money;
 	public static int p1_stamina;
 	public static int p1_looks;
+    public static int p1_maxStamina;
+    public static int p1_takeTime;
+
+    public static int p2_money;
+    public static int p2_stamina;
+    public static int p2_looks;
+    public static int p2_maxStamina;
+    public static int p2_takeTime;
 
 	// Use this for initialization
 	void Start () {
@@ -16,4 +24,16 @@ public class PlayerStatusModel : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public int getP1Money() { return p1_money; }
+    public int getP1Stamina() { return p1_stamina; }
+    public int getP1Looks() { return p1_looks; }
+    public int getP1MaxStamina() { return p1_maxStamina; }
+    public int getP1TakeTime() { return p1_takeTime; }
+
+    public int getP2Money() { return p2_money; }
+    public int getP2Stamina() { return p2_stamina; }
+    public int getP2Looks() { return p2_looks; }
+    public int getP2MaxStamina() { return p2_maxStamina; }
+    public int getP2TakeTime() { return p2_takeTime; }
 }

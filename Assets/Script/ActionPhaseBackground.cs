@@ -11,12 +11,12 @@ public class ActionPhaseBackground : MonoBehaviour {
     public Sprite LooksSprite;
     public Sprite ShapeSprite;
     
-    private string actionName;
+    public string actionName;
 
 	// Use this for initialization
 	void Start () {
         // 今はシーンから持ってこれないのでworkに初期化
-        actionName = "looks";
+        //actionName = "looks";
 
         // このobjectのSpriteRendererを取得
         MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();

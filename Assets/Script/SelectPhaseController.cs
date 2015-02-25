@@ -26,14 +26,20 @@ public class SelectPhaseController : MonoBehaviour {
 	//選択カーソルのゲームオブジェクト
 	public GameObject select;
 
+	// シーンの管理オブジェクト
+	public GameObject manager;
+
 	// Use this for initialization
 	void Start () {
 		poolPosition = new Vector3(-10, 0, 0);
+		if (manager == null)
+			manager = GameObject.Find("Select Phase Manager");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// 右ボタンが押された場合、カーソルを右に動かす。
+		// 選択肢の端を超えた場合、反対側へカーソルを移動させる
 		if (Input.GetButtonDown(playerId.ToString() + " Right")) {
 			currentSelected++;
 			if (currentPhase == Phase.Phase1 && currentSelected > maxSelectPhase1 - 1)
@@ -69,11 +75,34 @@ public class SelectPhaseController : MonoBehaviour {
 					default:
 						break;
 				}
-				Transform o = this.GetComponentsInChildren<Transform>().Where(obj => obj.transform.localPosition == Vector3.zero && obj.transform != this.transform).First();
-				maxSelectPhase2 = o.transform.GetComponentsInChildren<Transform>().Where(obj => obj.transform != o.transform && obj.name.Contains("Select")).ToArray().Length;
+				// 子オブジェクト中からローカルポジションが親オブジェクトの原点のものを取得し、選択肢の数を取得する
+				Transform o = this.GetComponentsInChildren<Transform>()
+					.Where(obj => obj.transform.localPosition == Vector3.zero && obj.transform != this.transform)
+					.First();
+				maxSelectPhase2 = o.transform.GetComponentsInChildren<Transform>()
+					.Where(obj => obj.transform != o.transform && obj.name.Contains("Select"))
+					.ToArray()
+					.Length;
+				
+				// カーソルを選択中の選択肢の上に配置する
 				MoveCursorObjectToSelectedObject();
 			} else if (currentPhase == Phase.Phase2) {
-				Application.LoadLevel("Act");
+				manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId);
+				Destroy(this);
+			}
+		}
+
+		if (Input.GetButtonDown(playerId.ToString() + " Cancel")) {
+			if (currentPhase == Phase.Phase2) {
+				currentPhase = Phase.Phase1;
+				currentSelected = 0;
+				string currentPhaseObjName = GetComponentsInChildren<Transform>()
+					.Where(obj => obj.transform.localPosition == Vector3.zero)
+					.First()
+					.name;
+				SetLocalPositionToPoolPositionByName(currentPhaseObjName);
+				SetLocalPositionToZeroByName("Phase1 select");
+				MoveCursorObjectToSelectedObject();
 			}
 		}
 	}

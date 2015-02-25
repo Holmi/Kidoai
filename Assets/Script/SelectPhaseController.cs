@@ -20,6 +20,9 @@ public class SelectPhaseController : MonoBehaviour {
 	private int maxSelectPhase1 = 3;
 	private int maxSelectPhase2;
 
+	// 選択されたアクションを示す
+	private int selectedAction = 0;
+
 	// 描画されていない選択肢のオブジェクトを保管するポジション
 	private Vector3 poolPosition;
 
@@ -68,12 +71,15 @@ public class SelectPhaseController : MonoBehaviour {
 				switch (currentSelected) {
 					case 0:
 						SetLocalPositionToZeroByName("Phase2 Act select");
+						selectedAction += 16;
 						break;
 					case 1:
 						SetLocalPositionToZeroByName("Phase2 Appeal select");
+						selectedAction += 32;
 						break;
 					case 2:
 						SetLocalPositionToZeroByName("Phase2 Jummer select");
+						selectedAction += 64;
 						break;
 					default:
 						break;
@@ -90,7 +96,7 @@ public class SelectPhaseController : MonoBehaviour {
 				// カーソルを選択中の選択肢の上に配置する
 				MoveCursorObjectToSelectedObject();
 			} else if (currentPhase == Phase.Phase2) {
-				manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId);
+				manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId, CalcAction());
 				GameObject obj = Instantiate(waitText) as GameObject;
 				obj.transform.parent = this.transform;
 				obj.transform.localPosition = new Vector3(0, 0, 0.8f);
@@ -141,5 +147,32 @@ public class SelectPhaseController : MonoBehaviour {
 			.Where(o => o.transform.localPosition == Vector3.zero).First();
 		select.transform.parent = obj.GetChild(currentSelected).transform;
 		select.transform.localPosition = new Vector3(0, 0.5f, 0);
+	}
+
+	/// <summary>
+	/// 選択された行動を計算します。
+	/// </summary>
+	/// <returns></returns>
+	ActionPhaseController.eSecondAction CalcAction() {
+		Transform selectedFirstAction = GetComponentsInChildren<Transform>()
+			.Where(obj => obj.transform.localPosition == Vector3.zero)
+			.First();
+
+		int action = 0;
+		switch (selectedFirstAction.name) {
+			case "Phase2 Act select":
+				action = 1;
+				break;
+			case "Phase2 Appeal select":
+				action = 5;
+				break;
+			case "Phase2 Jummer select":
+				action = 8;
+				break;
+			default:
+				break;
+		}
+		
+		return (ActionPhaseController.eSecondAction) (action + currentSelected);
 	}
 }

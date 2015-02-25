@@ -6,6 +6,9 @@ public class PlayerStatusModel {
 	public static PlayerStatus player1 = new PlayerStatus();
 	public static PlayerStatus player2 = new PlayerStatus();
 
+	/// <summary>
+	/// 現在日時
+	/// </summary>
 	public static int nowDate = 0;
 
 	public class PlayerStatus {
@@ -43,6 +46,13 @@ public class PlayerStatusModel {
 		public int MaxStamina {
 			get { return maxStamina; }
 			set { maxStamina = (value >= maxStamina) ? value : maxStamina; }
+		}
+
+		// 選択された行動
+		private ActionPhaseController.eSecondAction selectedAction;
+		public ActionPhaseController.eSecondAction SelectedAction {
+			get { return selectedAction; }
+			set { selectedAction = value; }
 		}
 
 		// かかる時間

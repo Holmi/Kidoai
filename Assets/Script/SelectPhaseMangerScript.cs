@@ -10,7 +10,9 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	public GameObject p1_statusObj;
 	public GameObject p2_statusObj;
 
-	public int lastDate = 30;
+	// 最終日の日付
+	[SerializeField]
+	private int lastDate = 30;
 
 	// Use this for initialization
 	void Start () {
@@ -31,8 +33,10 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	/// すべてのプレイヤーが次の選択肢を決定し終えた場合、次のシーンへ遷移します。
 	/// </summary>
 	/// <param name="playerId">プレイヤーID</param>
-	public void ChangeReadyToNextFlg(int playerId) {
+	public void ChangeReadyToNextFlg(int playerId, ActionPhaseController.eSecondAction action) {
 		readyToNextPhaseFlg[playerId] = true;
+		SetAction(playerId, action);
+		Debug.Log(action.ToString());
 		foreach (bool item in readyToNextPhaseFlg) {
 			if (!item)
 				return;
@@ -126,5 +130,22 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 		else if (staminaRate >= 0.2f)
 			return "E";
 		return "F";
+	}
+
+	/// <summary>
+	/// </summary>
+	/// <param name="playerId"></param>
+	/// <param name="action"></param>
+	void SetAction(int playerId, ActionPhaseController.eSecondAction action) {
+		switch (playerId) {
+			case 0:
+				PlayerStatusModel.player1.SelectedAction = action;
+				break;
+			case 1:
+				PlayerStatusModel.player2.SelectedAction = action;
+				break;
+			default:
+				break;
+		}
 	}
 }

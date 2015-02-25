@@ -10,9 +10,13 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	public GameObject p1_statusObj;
 	public GameObject p2_statusObj;
 
+	public int lastDate = 30;
+
 	// Use this for initialization
 	void Start () {
 		PlayerStatusModel.nowDate++;
+		if (PlayerStatusModel.nowDate >= lastDate)
+			Application.LoadLevel("End Scene");
 		SetStatusToUI();
 	}
 	

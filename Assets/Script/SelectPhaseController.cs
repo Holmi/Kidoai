@@ -29,6 +29,9 @@ public class SelectPhaseController : MonoBehaviour {
 	// シーンの管理オブジェクト
 	public GameObject manager;
 
+	// 選択終了時に表示するテキストオブジェクト
+	public GameObject waitText;
+
 	// Use this for initialization
 	void Start () {
 		poolPosition = new Vector3(-10, 0, 0);
@@ -88,6 +91,9 @@ public class SelectPhaseController : MonoBehaviour {
 				MoveCursorObjectToSelectedObject();
 			} else if (currentPhase == Phase.Phase2) {
 				manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId);
+				GameObject obj = Instantiate(waitText) as GameObject;
+				obj.transform.parent = this.transform;
+				obj.transform.localPosition = new Vector3(0, 0, 0.8f);
 				Destroy(this);
 			}
 		}

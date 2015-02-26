@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class SelectPhaseMangerScript : MonoBehaviour {
 
@@ -10,16 +11,30 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	public GameObject p1_statusObj;
 	public GameObject p2_statusObj;
 
+	// 次のシーンへ遷移する際の効果音
+	public AudioClip changeSceneSE;
+
+	// カードを引いた時の効果音
+	public AudioClip drawCardSE;
+
 	// 最終日の日付
 	[SerializeField]
 	private int lastDate = 30;
+
+	private delegate void Function();
+	void PlayEvent(AudioClip ac, Function func) {
+		audio.PlayOneShot(ac);
+		Thread.Sleep(ac.samples / ac.frequency * 1000);
+		func();
+	}
 
 	// Use this for initialization
 	void Start () {
 		PlayerStatusModel.nowDate++;
 		if (PlayerStatusModel.nowDate >= lastDate)
-			Application.LoadLevel("End Scene");
+			PlayEvent(changeSceneSE, () => Application.LoadLevel("End Scene"));
 		SetStatusToUI();
+		PlayDrawSound();
 	}
 	
 	// Update is called once per frame
@@ -41,7 +56,7 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 			if (!item)
 				return;
 		}
-		Application.LoadLevel("Action Phase");
+		PlayEvent(changeSceneSE, () => Application.LoadLevel("Action Phase"));
 	}
 
 	/// <summary>
@@ -183,5 +198,10 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 			default:
 				return 0;
 		}
+	}
+
+	// カードを引いた効果音を鳴らします。
+	void PlayDrawSound() {
+		audio.PlayOneShot(drawCardSE);
 	}
 }

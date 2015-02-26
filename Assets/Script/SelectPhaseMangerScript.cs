@@ -10,7 +10,9 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	public GameObject p1_statusObj;
 	public GameObject p2_statusObj;
 
-	public int lastDate = 30;
+	// 最終日の日付
+	[SerializeField]
+	private int lastDate = 30;
 
 	// Use this for initialization
 	void Start () {
@@ -31,8 +33,10 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	/// すべてのプレイヤーが次の選択肢を決定し終えた場合、次のシーンへ遷移します。
 	/// </summary>
 	/// <param name="playerId">プレイヤーID</param>
-	public void ChangeReadyToNextFlg(int playerId) {
+	public void ChangeReadyToNextFlg(int playerId, ActionPhaseController.eSecondAction action) {
 		readyToNextPhaseFlg[playerId] = true;
+		SetAction(playerId, action);
+		Debug.Log(action.ToString());
 		foreach (bool item in readyToNextPhaseFlg) {
 			if (!item)
 				return;
@@ -126,5 +130,57 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 		else if (staminaRate >= 0.2f)
 			return "E";
 		return "F";
+	}
+
+	/// <summary>
+	/// プレイヤーの行動を次シーンへの受け渡しモデルに設定します。
+	/// </summary>
+	/// <param name="playerId"></param>
+	/// <param name="action"></param>
+	void SetAction(int playerId, ActionPhaseController.eSecondAction action) {
+		switch (playerId) {
+			case 0:
+				PlayerStatusModel.player1.SelectedAction = action;
+				PlayerStatusModel.player1.takeTime = CalcTakeTime(action);
+				break;
+			case 1:
+				PlayerStatusModel.player2.SelectedAction = action;
+				PlayerStatusModel.player2.takeTime = CalcTakeTime(action);
+				break;
+			default:
+				break;
+		}
+	}
+
+	/// <summary>
+	/// 行動からかかる時間を取得します。
+	/// </summary>
+	/// <param name="action">行動</param>
+	/// <returns></returns>
+	int CalcTakeTime(ActionPhaseController.eSecondAction action) {
+		switch (action) {
+			case ActionPhaseController.eSecondAction.work:
+				return 3;
+			case ActionPhaseController.eSecondAction.shapeup:
+				return 1;
+			case ActionPhaseController.eSecondAction.looks:
+				return 1;
+			case ActionPhaseController.eSecondAction.rest:
+				return 1;
+			case ActionPhaseController.eSecondAction.talk:
+				return 1;
+			case ActionPhaseController.eSecondAction.present:
+				return 1;
+			case ActionPhaseController.eSecondAction.date:
+				return 2;
+			case ActionPhaseController.eSecondAction.gossip:
+				return 1;
+			case ActionPhaseController.eSecondAction.challenge:
+				return 1;
+			case ActionPhaseController.eSecondAction.curse:
+				return 1;
+			default:
+				return 0;
+		}
 	}
 }

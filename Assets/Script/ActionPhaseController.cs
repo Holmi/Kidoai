@@ -14,6 +14,8 @@ public class ActionPhaseController : MonoBehaviour
     public eFirstAction myFirstAction;  // 自分磨き、アピール、妨害のどれか
     public eSecondAction mySecondAction; // バイト、会話、噂など
 
+    private bool challengeFlag;
+
     public enum eFirstAction { improve, appeal, disturb };
     public enum eSecondAction
     {
@@ -27,6 +29,7 @@ public class ActionPhaseController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        challengeFlag = false;
 
         if (gameObject.tag == "p1")
         {
@@ -113,12 +116,15 @@ public class ActionPhaseController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //UpdateParameters(PlayerStatusModel.player1);
-            Application.LoadLevel("Select Phase");
+            if (challengeFlag) Application.LoadLevel("Challenge Mini Game"); 
+            else Application.LoadLevel("Select Phase");
+            
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //UpdateParameters(PlayerStatusModel.player2);
-            Application.LoadLevel("Select Phase");
+            if (challengeFlag) Application.LoadLevel("Challenge Mini Game");
+            else Application.LoadLevel("Select Phase");
         }
 
 
@@ -137,7 +143,6 @@ public class ActionPhaseController : MonoBehaviour
         {
             GameObject selectBoxes = GameObject.FindWithTag("p2_selectBoxes");
             selectBoxes.transform.Translate(5, 0, 0);
-
         }
 
 
@@ -173,8 +178,9 @@ public class ActionPhaseController : MonoBehaviour
     {
         if (player.SelectedAction == eSecondAction.challenge)
         {
-           // ミニゲームに遷移
-           // Application.LoadLevel("Select Phase"); 
+            
+           // ミニゲームに遷移するためにフラグ立て
+           
 
         }
 

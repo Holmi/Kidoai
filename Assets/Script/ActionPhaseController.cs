@@ -14,6 +14,8 @@ public class ActionPhaseController : MonoBehaviour
     public eFirstAction myFirstAction;  // 自分磨き、アピール、妨害のどれか
     public eSecondAction mySecondAction; // バイト、会話、噂など
 
+    public ActionPhaseSelectText manager = new ActionPhaseSelectText();
+    public TextAsset text_datas = null;
 
     public enum eFirstAction { improve, appeal, disturb };
     public enum eSecondAction
@@ -28,6 +30,7 @@ public class ActionPhaseController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //manager.LoadSelectTextData(text_datas);
 
         if (gameObject.tag == "p1")
         {

@@ -41,11 +41,15 @@ public class ActionPhaseController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             UpdateParameters(PlayerStatusModel.player1);
+            Application.LoadLevel("Select Phase");
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             UpdateParameters(PlayerStatusModel.player2);
+            Application.LoadLevel("Select Phase");
         }
+
+
 
     }
 

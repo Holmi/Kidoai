@@ -37,9 +37,9 @@ public class SelectPhaseController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (playerId == PlayerId.Player1 && PlayerStatusModel.player1.takeTime > 0)
+		if (playerId == PlayerId.Player1 && PlayerStatusModel.player1.TakeTime > 0)
 			InstantiateWaitText();
-		else if (playerId == PlayerId.Player2 && PlayerStatusModel.player2.takeTime > 0)
+		else if (playerId == PlayerId.Player2 && PlayerStatusModel.player2.TakeTime > 0)
 			InstantiateWaitText();
 
 		poolPosition = new Vector3(-10, 0, 0);

@@ -4,6 +4,7 @@ using System.Collections;
 public class ActionPhaseBackground : MonoBehaviour {
     
     SpriteRenderer MainSpriteRenderer;
+    
 
     // publicで宣言し、inspectorで設定可能にする
     public Sprite WorkSprite;
@@ -15,14 +16,13 @@ public class ActionPhaseBackground : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        // 今はシーンから持ってこれないのでworkに初期化
-        //actionName = "looks";
 
         // このobjectのSpriteRendererを取得
         MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        // 行動名によって背景を変える
-        ChangeBackground(actionName);
+        // 選択された行動によって背景を変える(なんかスマートにできなかったゴメン)
+        if (gameObject.tag == "p1_bg") ChangeBackground(PlayerStatusModel.player1);
+        else if (gameObject.tag == "p2_bg") ChangeBackground(PlayerStatusModel.player2);
 	}
 	
 	// Update is called once per frame
@@ -30,21 +30,22 @@ public class ActionPhaseBackground : MonoBehaviour {
 
 	}
 
-    void ChangeBackground(string actionName)
+    void ChangeBackground(PlayerStatusModel.PlayerStatus player)
     {
+              
         // SpriteRenderのspriteを設定済みの他のspriteに変更
-        switch (actionName)
+        switch (player.SelectedAction)
         {
-            case "work":
+            case ActionPhaseController.eSecondAction.work:
                 MainSpriteRenderer.sprite = WorkSprite;
                 break;
-            case "rest":
+            case ActionPhaseController.eSecondAction.rest:
                 MainSpriteRenderer.sprite = RestSprite;
                 break;
-            case "looks":
+            case ActionPhaseController.eSecondAction.looks:
                 MainSpriteRenderer.sprite = LooksSprite;
                 break;
-            case "shape":
+            case ActionPhaseController.eSecondAction.shapeup:
                 MainSpriteRenderer.sprite = ShapeSprite;
                 break;
             default:

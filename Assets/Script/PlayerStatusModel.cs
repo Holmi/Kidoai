@@ -55,7 +55,12 @@ public class PlayerStatusModel {
 			set { selectedAction = value; }
 		}
 
-		// かかる時間
-		public int takeTime;
+		// 行動にかかる時間
+		private static int takeTime;
+        public int TakeTime{
+            get { return takeTime; }
+            set { takeTime = value; }
+        }
+
 	}
 }

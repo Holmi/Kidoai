@@ -97,6 +97,8 @@ public class SelectPhaseController : MonoBehaviour {
 					.Where(obj => obj.transform != o.transform && obj.name.Contains("Select"))
 					.ToArray()
 					.Length;
+
+				manager.SendMessage("PlayDrawSound");
 				
 				// カーソルを選択中の選択肢の上に配置する
 				MoveCursorObjectToSelectedObject();
@@ -107,6 +109,7 @@ public class SelectPhaseController : MonoBehaviour {
 
 		if (Input.GetButtonDown(playerId.ToString() + " Cancel")) {
 			if (currentPhase == Phase.Phase2) {
+				manager.SendMessage("PlayDrawSound");
 				currentPhase = Phase.Phase1;
 				currentSelected = 0;
 				string currentPhaseObjName = GetComponentsInChildren<Transform>()
@@ -183,6 +186,7 @@ public class SelectPhaseController : MonoBehaviour {
 	void InstantiateWaitText() {
 		// マネージャーに行動確定したことを通知する
 		manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId, CalcAction());
+
 		
 		// 相手の行動確定を待つようテキストを表示します。
 		GameObject obj = Instantiate(waitText) as GameObject;

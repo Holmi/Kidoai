@@ -23,6 +23,7 @@ public class ActionPhaseBackground : MonoBehaviour {
 
         // このobjectのSpriteRendererを取得
         MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        
 
         // 選択された行動によって背景を変える(なんかスマートにできなかったゴメン)
         if (gameObject.tag == "p1_bg") ChangeBackground(PlayerStatusModel.player1);

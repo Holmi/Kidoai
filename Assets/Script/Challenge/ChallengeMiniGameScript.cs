@@ -28,10 +28,15 @@ public class ChallengeMiniGameScript : MonoBehaviour {
 			limitTime = 0f;
 			if (p1Count > p2Count) {
 				winnerText.text = "プレイヤー1の勝ち！！";
-			} else if (p1Count < p2Count)
+				PlayerStatusModel.player1.Love += 10;
+				PlayerStatusModel.player1.MaxStamina += PlayerStatusModel.player1.MaxStamina / 10;
+			} else if (p1Count < p2Count) {
 				winnerText.text = "プレイヤー２の勝ち！！";
-			else
+				PlayerStatusModel.player2.Love += 10;
+				PlayerStatusModel.player2.MaxStamina += PlayerStatusModel.player2.MaxStamina / 10;
+			} else
 				winnerText.text = "引き分け";
+			StartCoroutine("ChangeScene");
 		} else {
 			limitTime -= Time.deltaTime;
 			if (Input.GetButtonDown("Player1 Dicision") || Input.GetButtonDown("Player1 Left")
@@ -50,5 +55,10 @@ public class ChallengeMiniGameScript : MonoBehaviour {
 	float Floor(float f) {
 		int returnValue = (int) (f * 100);
 		return returnValue / 100f;
+	}
+
+	IEnumerator ChangeScene() {
+		yield return new WaitForSeconds(2f);
+		Application.LoadLevel("Select Phase");
 	}
 }

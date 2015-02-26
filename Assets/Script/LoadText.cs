@@ -5,20 +5,23 @@ using System.Collections;
 
 public class LoadText : MonoBehaviour {
 
-	TextAsset text = Resources.Load ("test.txt") as TextAsset;
+	Text text;
+	public string[] txtArray;
+	int n = 0;
 
 	// Use this for initialization
 	void Start () {
-		/*using (StreamReader reader = new StreamReader(Application.dataPath + "/test.txt")) {
-			if (reader != null) {
-				this.GetComponent<GUIText>().text = reader.ReadLine();
-			}
-		}*/
-
+		string splitMark = "\n";
+		//テキストを格納
+		TextAsset txt = Resources.Load("test") as TextAsset;
+		//\nでテキストを区切る
+		txtArray = txt.text.Split (splitMark[0]);
+		text = GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log(txt.text);
+		text.text = txtArray[n];
+		if(Input.GetMouseButtonDown(0)) n++;
 	}
 }

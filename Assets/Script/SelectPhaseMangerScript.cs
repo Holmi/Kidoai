@@ -133,6 +133,7 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// プレイヤーの行動を次シーンへの受け渡しモデルに設定します。
 	/// </summary>
 	/// <param name="playerId"></param>
 	/// <param name="action"></param>
@@ -146,6 +147,21 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 				break;
 			default:
 				break;
+		}
+	}
+
+	int CalcTakeTime(ActionPhaseController.eSecondAction action) {
+		switch (action) {
+			case ActionPhaseController.eSecondAction.work:
+				return 3;
+			case ActionPhaseController.eSecondAction.shapeup:
+				return 1;
+			case ActionPhaseController.eSecondAction.looks:
+				return 1;
+			case ActionPhaseController.eSecondAction.rest:
+				return 1;
+			default:
+				return 0;
 		}
 	}
 }

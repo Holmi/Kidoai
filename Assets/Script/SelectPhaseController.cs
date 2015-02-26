@@ -37,6 +37,11 @@ public class SelectPhaseController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (playerId == PlayerId.Player1 && PlayerStatusModel.player1.takeTime > 0)
+			InstantiateWaitText();
+		else if (playerId == PlayerId.Player2 && PlayerStatusModel.player2.takeTime > 0)
+			InstantiateWaitText();
+
 		poolPosition = new Vector3(-10, 0, 0);
 		if (manager == null)
 			manager = GameObject.Find("Select Phase Manager");
@@ -97,10 +102,7 @@ public class SelectPhaseController : MonoBehaviour {
 				MoveCursorObjectToSelectedObject();
 			} else if (currentPhase == Phase.Phase2) {
 				manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId, CalcAction());
-				GameObject obj = Instantiate(waitText) as GameObject;
-				obj.transform.parent = this.transform;
-				obj.transform.localPosition = new Vector3(0, 0, 0.8f);
-				Destroy(this);
+				InstantiateWaitText();
 			}
 		}
 
@@ -174,5 +176,15 @@ public class SelectPhaseController : MonoBehaviour {
 		}
 		
 		return (ActionPhaseController.eSecondAction) (action + currentSelected);
+	}
+
+	/// <summary>
+	/// 相手の行動選択を待つようにテキストを表示し、このスクリプトを破棄します。
+	/// </summary>
+	void InstantiateWaitText() {
+		GameObject obj = Instantiate(waitText) as GameObject;
+		obj.transform.parent = this.transform;
+		obj.transform.localPosition = new Vector3(0, 0, 0.8f);
+		Destroy(this);
 	}
 }

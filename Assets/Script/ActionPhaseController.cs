@@ -29,6 +29,7 @@ public class ActionPhaseController : MonoBehaviour
     {
         // 前シーンから受けつぐが今は仮値入れとく
         //myAction = eAction.shapeup;
+        
         money = 1000;
         stamina = 10;
         max_stamina = 15;
@@ -52,6 +53,7 @@ public class ActionPhaseController : MonoBehaviour
 
     void UpdateParameters(eSecondAction action)
     {
+        
         taketime -= 1;
         switch (action)
         {

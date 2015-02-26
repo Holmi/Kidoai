@@ -18,29 +18,35 @@ public class SelectPhaseController : MonoBehaviour {
 	// 選択画面で現在選択中の選択肢
 	private int currentSelected = 0;
 	private int maxSelectPhase1 = 3;
-	[SerializeField]
 	private int maxSelectPhase2;
 
 	// 描画されていない選択肢のオブジェクトを保管するポジション
 	private Vector3 poolPosition;
+
 	//選択カーソルのゲームオブジェクト
 	public GameObject select;
+
+	// シーンの管理オブジェクト
+	public GameObject manager;
 
 	// Use this for initialization
 	void Start () {
 		poolPosition = new Vector3(-10, 0, 0);
+		if (manager == null)
+			manager = GameObject.Find("Select Phase Manager");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// 右ボタンが押された場合、カーソルを右に動かす。
+		// 選択肢の端を超えた場合、反対側へカーソルを移動させる
 		if (Input.GetButtonDown(playerId.ToString() + " Right")) {
-			select.transform.position += new Vector3(0.6f,0,0);
 			currentSelected++;
 			if (currentPhase == Phase.Phase1 && currentSelected > maxSelectPhase1 - 1)
 				currentSelected = 0;
 			else if (currentPhase == Phase.Phase2 && currentSelected > maxSelectPhase2 - 1)
 				currentSelected = 0;
+			MoveCursorObjectToSelectedObject();
 		} else if (Input.GetButtonDown(playerId.ToString() + " Left")) {
 			select.transform.position -= new Vector3(0.6f,0,0);
 			currentSelected--;
@@ -48,6 +54,7 @@ public class SelectPhaseController : MonoBehaviour {
 				currentSelected = maxSelectPhase1 - 1;
 			else if (currentPhase == Phase.Phase2 && currentSelected < 0)
 				currentSelected = maxSelectPhase2 - 1;
+			MoveCursorObjectToSelectedObject();
 		}
 
 		// 決定ボタンが押された場合、次のフェーズへ進める。
@@ -68,10 +75,34 @@ public class SelectPhaseController : MonoBehaviour {
 					default:
 						break;
 				}
-				Transform o = this.GetComponentsInChildren<Transform>().Where(obj => obj.transform.localPosition == new Vector3(0, 0, 0.8f) && obj.transform != this.transform).First();
-				maxSelectPhase2 = o.transform.GetComponentsInChildren<Transform>().Where(obj => obj.transform != o.transform && obj.name.Contains("Select")).ToArray().Length;
+				// 子オブジェクト中からローカルポジションが親オブジェクトの原点のものを取得し、選択肢の数を取得する
+				Transform o = this.GetComponentsInChildren<Transform>()
+					.Where(obj => obj.transform.localPosition == Vector3.zero && obj.transform != this.transform)
+					.First();
+				maxSelectPhase2 = o.transform.GetComponentsInChildren<Transform>()
+					.Where(obj => obj.transform != o.transform && obj.name.Contains("Select"))
+					.ToArray()
+					.Length;
+				
+				// カーソルを選択中の選択肢の上に配置する
+				MoveCursorObjectToSelectedObject();
 			} else if (currentPhase == Phase.Phase2) {
-				Application.LoadLevel("Act");
+				manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId);
+				Destroy(this);
+			}
+		}
+
+		if (Input.GetButtonDown(playerId.ToString() + " Cancel")) {
+			if (currentPhase == Phase.Phase2) {
+				currentPhase = Phase.Phase1;
+				currentSelected = 0;
+				string currentPhaseObjName = GetComponentsInChildren<Transform>()
+					.Where(obj => obj.transform.localPosition == Vector3.zero)
+					.First()
+					.name;
+				SetLocalPositionToPoolPositionByName(currentPhaseObjName);
+				SetLocalPositionToZeroByName("Phase1 select");
+				MoveCursorObjectToSelectedObject();
 			}
 		}
 	}
@@ -83,7 +114,7 @@ public class SelectPhaseController : MonoBehaviour {
 	void SetLocalPositionToZeroByName(string objectName) {
 		Transform obj = transform.GetComponentsInChildren<Transform>()
 			.Where(o => o.name.Equals(objectName)).First();
-		obj.transform.localPosition = new Vector3(0, 0, 0.8f);
+		obj.transform.localPosition = Vector3.zero;
 	}
 
 	/// <summary>
@@ -94,5 +125,15 @@ public class SelectPhaseController : MonoBehaviour {
 		Transform obj = transform.GetComponentsInChildren<Transform>()
 			.Where(o => o.name.Equals(objectName)).First();
 		obj.transform.localPosition = poolPosition;
+	}
+
+	/// <summary>
+	/// カーソルオブジェクトを選択中のオブジェクトのポジションに移動させます。
+	/// </summary>
+	void MoveCursorObjectToSelectedObject() {
+		Transform obj = transform.GetComponentsInChildren<Transform>()
+			.Where(o => o.transform.localPosition == Vector3.zero).First();
+		select.transform.parent = obj.GetChild(currentSelected).transform;
+		select.transform.localPosition = new Vector3(0, 0.5f, 0);
 	}
 }

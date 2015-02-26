@@ -2,7 +2,11 @@ fileFormatVersion: 2
 guid: 8aaa2fea52cf6ed40b3880b1a223ad6d
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - WorkSprite: {fileID: 21300000, guid: 5be79b6a8feb2904081fc5295c3ebfbd, type: 3}
+  - RestSprite: {fileID: 21300000, guid: 6b20846415168cd4d8b83dd8889e85fc, type: 3}
+  - LooksSprite: {fileID: 21300000, guid: 2c8e2dfdcfc452e4497891f7dddddf87, type: 3}
+  - ShapeSprite: {fileID: 21300000, guid: f1c1e902252ae08429d077f0238a0a95, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

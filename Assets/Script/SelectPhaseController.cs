@@ -186,6 +186,7 @@ public class SelectPhaseController : MonoBehaviour {
 	void InstantiateWaitText() {
 		// マネージャーに行動確定したことを通知する
 		manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId, CalcAction());
+
 		
 		// 相手の行動確定を待つようテキストを表示します。
 		GameObject obj = Instantiate(waitText) as GameObject;

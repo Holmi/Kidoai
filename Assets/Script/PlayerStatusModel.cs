@@ -55,6 +55,16 @@ public class PlayerStatusModel {
 			set { maxStamina = (value >= maxStamina) ? value : maxStamina; }
 		}
 
+
+        // 自分磨きかアピールか妨害か
+        private ActionPhaseController.eFirstAction selectedPurpose;
+        public ActionPhaseController.eFirstAction SelectedPurpose
+        {
+            get { return selectedPurpose; }
+            set { selectedPurpose = value; }
+        }
+
+
 		// 選択された行動
 		private ActionPhaseController.eSecondAction selectedAction;
 		public ActionPhaseController.eSecondAction SelectedAction {

@@ -62,7 +62,7 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 	/// <summary>
 	/// 画面にプレイヤーのパラメータを表示します。
 	/// </summary>
-	void SetStatusToUI() {
+	public void SetStatusToUI() {
 		TextMesh[] textMesh = p1_statusObj.GetComponentsInChildren<TextMesh>();
 		foreach(TextMesh item in textMesh) {
 			switch (item.name) {
@@ -167,6 +167,7 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 		}
 	}
 
+
 	/// <summary>
 	/// 行動からかかる時間を取得します。
 	/// </summary>
@@ -177,7 +178,7 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 			case ActionPhaseController.eSecondAction.work:
 				return 3;
 			case ActionPhaseController.eSecondAction.shapeup:
-				return 1;
+				return 2;
 			case ActionPhaseController.eSecondAction.looks:
 				return 1;
 			case ActionPhaseController.eSecondAction.rest:

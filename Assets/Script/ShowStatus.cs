@@ -30,7 +30,7 @@ public class ShowStatus : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if(Input.GetKeyDown("space")) Application.LoadLevel("Select Phase");
 	}
 
 	/// <summary>

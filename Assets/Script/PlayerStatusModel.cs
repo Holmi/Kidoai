@@ -20,6 +20,13 @@ public class PlayerStatusModel {
 			takeTime = 0;
 		}
 
+		// 好感度
+		private int love;
+		public int Love {
+			get { return love; }
+			set { love = value; }
+		}
+
 		// プレイヤー1の所持金額値
 		private int money;
 		public int Money {

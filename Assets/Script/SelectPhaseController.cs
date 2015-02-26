@@ -152,7 +152,7 @@ public class SelectPhaseController : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// 選択された行動を計算します。
+	/// 選択された行動を計算し、eSecondAction型に変換します。
 	/// </summary>
 	/// <returns></returns>
 	ActionPhaseController.eSecondAction CalcAction() {

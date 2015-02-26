@@ -11,6 +11,10 @@ public class ActionPhaseBackground : MonoBehaviour {
     public Sprite RestSprite;
     public Sprite LooksSprite;
     public Sprite ShapeSprite;
+    public Sprite MorningSprite;
+    public Sprite EveningSprite;
+    public Sprite NightSprite;
+
     
     public string actionName;
 
@@ -47,6 +51,24 @@ public class ActionPhaseBackground : MonoBehaviour {
                 break;
             case ActionPhaseController.eSecondAction.shapeup:
                 MainSpriteRenderer.sprite = ShapeSprite;
+                break;
+            case ActionPhaseController.eSecondAction.talk:
+                MainSpriteRenderer.sprite = MorningSprite;
+                break;
+            case ActionPhaseController.eSecondAction.present:
+                MainSpriteRenderer.sprite = EveningSprite;
+                break;
+            case ActionPhaseController.eSecondAction.date:
+                MainSpriteRenderer.sprite = NightSprite;
+                break;
+            case ActionPhaseController.eSecondAction.gossip:
+                MainSpriteRenderer.sprite = MorningSprite;
+                break;
+            case ActionPhaseController.eSecondAction.challenge:
+                MainSpriteRenderer.sprite = EveningSprite;
+                break;
+            case ActionPhaseController.eSecondAction.curse:
+                MainSpriteRenderer.sprite = NightSprite;
                 break;
             default:
                 break;

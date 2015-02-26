@@ -141,11 +141,11 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 		switch (playerId) {
 			case 0:
 				PlayerStatusModel.player1.SelectedAction = action;
-				PlayerStatusModel.player1.takeTime = CalcTakeTime(action);
+				PlayerStatusModel.player1.TakeTime = CalcTakeTime(action);
 				break;
 			case 1:
 				PlayerStatusModel.player2.SelectedAction = action;
-				PlayerStatusModel.player2.takeTime = CalcTakeTime(action);
+				PlayerStatusModel.player2.TakeTime = CalcTakeTime(action);
 				break;
 			default:
 				break;

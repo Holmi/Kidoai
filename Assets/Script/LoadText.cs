@@ -6,25 +6,22 @@ using System.Collections;
 public class LoadText : MonoBehaviour {
 
 	Text text;
-	private string[] txtArray;
-
+	public string[] txtArray;
+	int n = 0;
 
 	// Use this for initialization
 	void Start () {
+		string splitMark = "\n";
 		//テキストを格納
 		TextAsset txt = Resources.Load("test") as TextAsset;
-		//;でテキストを区切る
-		txtArray = txt.text.Replace (";\n", ";").Split (";"[0]);
+		//\nでテキストを区切る
+		txtArray = txt.text.Split (splitMark[0]);
 		text = GetComponent<Text> ();
-		text.text = txt.text;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-<<<<<<< HEAD
-
-=======
-		//Debug.Log(txt.text);
->>>>>>> master
+		text.text = txtArray[n];
+		if(Input.GetMouseButtonDown(0)) n++;
 	}
 }

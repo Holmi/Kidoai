@@ -141,15 +141,22 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 		switch (playerId) {
 			case 0:
 				PlayerStatusModel.player1.SelectedAction = action;
+				PlayerStatusModel.player1.takeTime = CalcTakeTime(action);
 				break;
 			case 1:
 				PlayerStatusModel.player2.SelectedAction = action;
+				PlayerStatusModel.player2.takeTime = CalcTakeTime(action);
 				break;
 			default:
 				break;
 		}
 	}
 
+	/// <summary>
+	/// 行動からかかる時間を取得します。
+	/// </summary>
+	/// <param name="action">行動</param>
+	/// <returns></returns>
 	int CalcTakeTime(ActionPhaseController.eSecondAction action) {
 		switch (action) {
 			case ActionPhaseController.eSecondAction.work:
@@ -159,6 +166,18 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 			case ActionPhaseController.eSecondAction.looks:
 				return 1;
 			case ActionPhaseController.eSecondAction.rest:
+				return 1;
+			case ActionPhaseController.eSecondAction.talk:
+				return 1;
+			case ActionPhaseController.eSecondAction.present:
+				return 1;
+			case ActionPhaseController.eSecondAction.date:
+				return 2;
+			case ActionPhaseController.eSecondAction.gossip:
+				return 1;
+			case ActionPhaseController.eSecondAction.challenge:
+				return 1;
+			case ActionPhaseController.eSecondAction.curse:
 				return 1;
 			default:
 				return 0;

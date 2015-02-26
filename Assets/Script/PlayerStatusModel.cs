@@ -56,11 +56,10 @@ public class PlayerStatusModel {
 		}
 
 		// 行動にかかる時間
-		private static int takeTime;
+		private int takeTime;
         public int TakeTime{
             get { return takeTime; }
             set { takeTime = value; }
         }
-
 	}
 }

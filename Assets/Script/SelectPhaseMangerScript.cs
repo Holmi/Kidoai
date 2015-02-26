@@ -34,7 +34,7 @@ public class SelectPhaseMangerScript : MonoBehaviour {
 		if (PlayerStatusModel.nowDate >= lastDate)
 			PlayEvent(changeSceneSE, () => Application.LoadLevel("End Scene"));
 		else if (PlayerStatusModel.nowDate == 10 || PlayerStatusModel.nowDate == 20)
-			PlayEvent(changeSceneSE, () => {Application.LoadLevel("Mid");});
+			PlayEvent(changeSceneSE, () => { Application.LoadLevel("Mid"); });
 		SetStatusToUI();
 		PlayDrawSound();
 	}

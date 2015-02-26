@@ -101,7 +101,6 @@ public class SelectPhaseController : MonoBehaviour {
 				// カーソルを選択中の選択肢の上に配置する
 				MoveCursorObjectToSelectedObject();
 			} else if (currentPhase == Phase.Phase2) {
-				manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId, CalcAction());
 				InstantiateWaitText();
 			}
 		}
@@ -182,6 +181,10 @@ public class SelectPhaseController : MonoBehaviour {
 	/// 相手の行動選択を待つようにテキストを表示し、このスクリプトを破棄します。
 	/// </summary>
 	void InstantiateWaitText() {
+		// マネージャーに行動確定したことを通知する
+		manager.GetComponent<SelectPhaseMangerScript>().ChangeReadyToNextFlg((int) playerId, CalcAction());
+		
+		// 相手の行動確定を待つようテキストを表示します。
 		GameObject obj = Instantiate(waitText) as GameObject;
 		obj.transform.parent = this.transform;
 		obj.transform.localPosition = new Vector3(0, 0, 0.8f);
